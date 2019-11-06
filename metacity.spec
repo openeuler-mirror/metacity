@@ -1,6 +1,6 @@
 Name:           metacity
 Version:        3.30.1
-Release:        1
+Release:        2
 Summary:        Window Manager for the MATE and GNOME Flashback desktops
 License:        GPLv2+
 URL:            https://download.gnome.org/sources/metacity/
@@ -53,7 +53,8 @@ make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 
 %files 
 %defattr(-,root,root)
-%doc AUTHORS COPYING 
+%doc AUTHORS 
+%license COPYING 
 %{_bindir}/metacity*
 %{_libdir}/libmetacity.so.*
 %{_datadir}/applications/*.desktop
@@ -75,6 +76,12 @@ make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 %{_datadir}/metacity/icons/*
 
 %changelog
+* Sat Oct 19 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.30.1-2
+- Type:bugfix
+- Id:NA
+- SUG:NA
+- DESC:change the directory of the license files
+
 * Tue Sep 10 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.30.1-1
 - Package init
 
