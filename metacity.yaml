@@ -1,0 +1,4 @@
+version_control: gitlab.gnome
+src_repo: metacity
+tag_prefix: METACITY_
+seperator: _
