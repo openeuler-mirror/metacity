@@ -1,19 +1,30 @@
 Name:           metacity
-Version:        3.30.1
-Release:        2
+Version:        3.36.1
+Release:        1
 Summary:        Window Manager for the MATE and GNOME Flashback desktops
 License:        GPLv2+
 URL:            https://download.gnome.org/sources/metacity/
-Source0:        https://download.gnome.org/sources/metacity/3.30/%{name}-%{version}.tar.xz
-# PATCH-FEATURE-UPSTREAM --revert unminimize windows with initial IconicState
-# https://gitlab.gnome.org/GNOME/metacity/issues/4 
-Patch1:         metacity-ggo04.patch
+Source0:        https://download.gnome.org/sources/metacity/3.36/%{name}-%{version}.tar.xz
 
 BuildRequires:  gtk3-devel glib2-devel gsettings-desktop-schemas-devel pango-devel libcanberra-devel
 BuildRequires:  startup-notification-devel libXcomposite-devel libXfixes-devel libXrender-devel
 BuildRequires:  libXrender-devel libXdamage-devel libXrender-devel libXcursor-devel libgtop2-devel
 BuildRequires:  libXinerama-devel libSM-devel libICE-devel libX11-devel desktop-file-utils itstool
 BuildRequires:  autoconf, automake, gettext-devel, libtool, gnome-common yelp-tools zenity
+BuildRequires: vulkan-devel
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
+BuildRequires: pkgconfig(gio-2.0) >= 2.44.0
+BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(libcanberra-gtk3)
+BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xfixes)
+BuildRequires: pkgconfig(xrender)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xrender)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(libgtop-2.0)
 
 Requires:       startup-notification gsettings-desktop-schemas zenity
 Provides:       firstboot(windowmanager) = metacity
@@ -76,6 +87,9 @@ make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 %{_datadir}/metacity/icons/*
 
 %changelog
+* Thu Jul 30 2020 hanhui <hanhui15@huawei.com> - 3.37.1-1
+- update to 3.36.1
+
 * Sat Oct 19 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.30.1-2
 - Type:bugfix
 - Id:NA
