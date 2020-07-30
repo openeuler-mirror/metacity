@@ -11,20 +11,10 @@ BuildRequires:  startup-notification-devel libXcomposite-devel libXfixes-devel l
 BuildRequires:  libXrender-devel libXdamage-devel libXrender-devel libXcursor-devel libgtop2-devel
 BuildRequires:  libXinerama-devel libSM-devel libICE-devel libX11-devel desktop-file-utils itstool
 BuildRequires:  autoconf, automake, gettext-devel, libtool, gnome-common yelp-tools zenity
-BuildRequires: vulkan-devel
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
-BuildRequires: pkgconfig(gio-2.0) >= 2.44.0
-BuildRequires: pkgconfig(gsettings-desktop-schemas)
-BuildRequires: pkgconfig(pango)
-BuildRequires: pkgconfig(libcanberra-gtk3)
-BuildRequires: pkgconfig(libstartup-notification-1.0)
-BuildRequires: pkgconfig(xcomposite)
-BuildRequires: pkgconfig(xfixes)
-BuildRequires: pkgconfig(xrender)
-BuildRequires: pkgconfig(xdamage)
-BuildRequires: pkgconfig(xrender)
-BuildRequires: pkgconfig(xcursor)
-BuildRequires: pkgconfig(libgtop-2.0)
+BuildRequires:  vulkan-devel pkgconfig(gtk+-3.0) >= 3.22.0 pkgconfig(gio-2.0) >= 2.44.0
+BuildRequires:  pkgconfig(gsettings-desktop-schemas) pkgconfig(pango) pkgconfig(libcanberra-gtk3)
+BuildRequires:  pkgconfig(libstartup-notification-1.0) pkgconfig(xcomposite) pkgconfig(xfixes) pkgconfig(xrender)
+BuildRequires:  pkgconfig(xdamage) pkgconfig(xrender) pkgconfig(xcursor) pkgconfig(libgtop-2.0)
 
 Requires:       startup-notification gsettings-desktop-schemas zenity
 Provides:       firstboot(windowmanager) = metacity
