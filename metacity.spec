@@ -1,20 +1,19 @@
 Name:           metacity
-Version:        3.36.1
+Version:        3.37.1
 Release:        1
 Summary:        Window Manager for the MATE and GNOME Flashback desktops
 License:        GPLv2+
 URL:            https://download.gnome.org/sources/metacity/
-Source0:        https://download.gnome.org/sources/metacity/3.36/%{name}-%{version}.tar.xz
+Source0:        https://download.gnome.org/sources/metacity/3.37/%{name}-%{version}.tar.xz
 
-BuildRequires:  gtk3-devel glib2-devel gsettings-desktop-schemas-devel pango-devel libcanberra-devel
-BuildRequires:  startup-notification-devel libXcomposite-devel libXfixes-devel libXrender-devel
-BuildRequires:  libXrender-devel libXdamage-devel libXrender-devel libXcursor-devel libgtop2-devel
+
 BuildRequires:  libXinerama-devel libSM-devel libICE-devel libX11-devel desktop-file-utils itstool
-BuildRequires:  autoconf, automake, gettext-devel, libtool, gnome-common yelp-tools zenity
-BuildRequires:  vulkan-devel pkgconfig(gtk+-3.0) >= 3.22.0 pkgconfig(gio-2.0) >= 2.44.0
+BuildRequires:  autoconf, automake, gettext-devel, libtool, gnome-common yelp-tools zenity vulkan-devel 
+BuildRequires:  pkgconfig(gtk+-3.0) >= 3.22.0 pkgconfig(gio-2.0) >= 2.44.0
 BuildRequires:  pkgconfig(gsettings-desktop-schemas) pkgconfig(pango) pkgconfig(libcanberra-gtk3)
 BuildRequires:  pkgconfig(libstartup-notification-1.0) pkgconfig(xcomposite) pkgconfig(xfixes) pkgconfig(xrender)
 BuildRequires:  pkgconfig(xdamage) pkgconfig(xrender) pkgconfig(xcursor) pkgconfig(libgtop-2.0)
+BuildRequires:  pkgconfig(xres) 
 
 Requires:       startup-notification gsettings-desktop-schemas zenity
 Provides:       firstboot(windowmanager) = metacity
@@ -72,11 +71,13 @@ make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 
 %files  help
 %defattr(-,root,root)
-%doc HACKING doc/metacity-theme.dtd NEWS rationales.txt README doc/theme-format.txt
+%doc HACKING NEWS rationales.txt README
 %{_mandir}/man1/*.gz
-%{_datadir}/metacity/icons/*
 
 %changelog
+* Sat Dec 04 2021 wangkerong <wangkerong@huawei.com> - 3.37.1-1
+- update to 3.37.1
+
 * Thu Jul 30 2020 hanhui <hanhui15@huawei.com> - 3.37.1-1
 - update to 3.36.1
 
@@ -88,6 +89,3 @@ make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 
 * Tue Sep 10 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.30.1-1
 - Package init
-
-
-
