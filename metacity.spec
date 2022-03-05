@@ -1,6 +1,6 @@
 Name:           metacity
 Version:        3.37.1
-Release:        1
+Release:        2
 Summary:        Window Manager for the MATE and GNOME Flashback desktops
 License:        GPLv2+
 URL:            https://download.gnome.org/sources/metacity/
@@ -10,7 +10,10 @@ Source0:        https://download.gnome.org/sources/metacity/3.37/%{name}-%{versi
 BuildRequires:  libXinerama-devel libSM-devel libICE-devel libX11-devel desktop-file-utils itstool
 BuildRequires:  autoconf, automake, gettext-devel, libtool, gnome-common yelp-tools zenity vulkan-devel 
 BuildRequires:  pkgconfig(gtk+-3.0) >= 3.22.0 pkgconfig(gio-2.0) >= 2.44.0
-BuildRequires:  pkgconfig(gsettings-desktop-schemas) pkgconfig(pango) pkgconfig(libcanberra-gtk3)
+BuildRequires:  pkgconfig(gsettings-desktop-schemas) pkgconfig(pango)
+%if %{?openEuler:1}0
+BuildRequires:  pkgconfig(libcanberra-gtk3)
+%endif
 BuildRequires:  pkgconfig(libstartup-notification-1.0) pkgconfig(xcomposite) pkgconfig(xfixes) pkgconfig(xrender)
 BuildRequires:  pkgconfig(xdamage) pkgconfig(xrender) pkgconfig(xcursor) pkgconfig(libgtop-2.0)
 BuildRequires:  pkgconfig(xres) 
@@ -41,7 +44,11 @@ CPPFLAGS="$CPPFLAGS -I$RPM_BUILD_ROOT%{_includedir}"
 export CPPFLAGS
 rm -f configure
 (if ! test -x configure; then autoreconf -i -f; fi;
- %configure  --disable-schemas-compile)
+ %configure \
+ %if !0%{?openEuler}
+     --disable-canberra \
+ %endif
+     --disable-schemas-compile)
 
 make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 
@@ -75,6 +82,9 @@ make CPPFLAGS="$CPPFLAGS" LIBS="$LIBS" %{?_smp_mflags}
 %{_mandir}/man1/*.gz
 
 %changelog
+* Sat Mar 05 2022 hanhui <hanhui15@h-partners.com> - 3.37.1-2
+- custom installation depend on libcanberra
+
 * Sat Dec 04 2021 wangkerong <wangkerong@huawei.com> - 3.37.1-1
 - update to 3.37.1
 
