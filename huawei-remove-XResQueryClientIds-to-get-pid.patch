@@ -1,0 +1,90 @@
+From: wuchaochao <wuchaochao4@h-partners.com>
+Date: Mon Feb 21 17:34:47 CST 2022
+Subject: [PATCH] remove XResQueryClientIds to get pid
+Signed-off-by: wuchaochao <wuchaochao4@h-partners.com>
+---
+ configure.ac            |  2 -+
+ src/core/window-props.c | 47  3 -----------------------------------------
+ 2 files changed, 1 insertions(+), 49 deletion(-)
+ 
+diff -Naur metacity-3.37.1/configure.ac m2/configure.ac
+--- metacity-3.37.1/configure.ac        2020-05-01 23:26:06.000000000 +0800
++++ m2/configure.ac     2022-02-21 17:05:17.732000000 +0800
+@@ -144,7 +144,7 @@
+ ## byte order
+ AC_C_BIGENDIAN
+ 
+-METACITY_PC_MODULES="gtk+-3.0 >= $GTK_REQUIRED_VERSION gio-2.0 >= $GLIB_REQUIRED_VERSION pango >= $PANGO_REQUIRED_VERSION gsettings-desktop-schemas >= 3.3.0 xcomposite >= $XCOMPOSITE_REQUIRED_VERSION xfixes xrender xdamage xres"
++METACITY_PC_MODULES="gtk+-3.0 >= $GTK_REQUIRED_VERSION gio-2.0 >= $GLIB_REQUIRED_VERSION pango >= $PANGO_REQUIRED_VERSION gsettings-desktop-schemas >= 3.3.0 xcomposite >= $XCOMPOSITE_REQUIRED_VERSION xfixes xrender xdamage"
+ 
+ GLIB_GSETTINGS
+ 
+diff -Naur metacity-3.37.1/src/core/window-props.c m2/src/core/window-props.c
+--- metacity-3.37.1/src/core/window-props.c     2020-05-01 22:48:27.000000000 +0800
++++ m2/src/core/window-props.c  2022-02-21 17:08:17.524000000 +0800
+@@ -43,7 +43,6 @@
+ #include "frame-private.h"
+ #include "group.h"
+ #include <X11/Xatom.h>
+-#include <X11/extensions/XRes.h>
+ #include <unistd.h>
+ #include <string.h>
+ #include <errno.h>
+@@ -396,56 +395,11 @@
+     window->role = g_strdup (value->v.str);
+ }
+ 
+-static pid_t
+-get_local_pid (MetaWindow *window)
+-{
+-  pid_t pid;
+-  XResClientIdSpec spec;
+-  long num_ids;
+-  XResClientIdValue *client_ids;
+-  long i;
+-
+-  pid = -1;
+-
+-  spec.client = window->xwindow;
+-  spec.mask = XRES_CLIENT_ID_PID_MASK;
+-
+-  XResQueryClientIds (window->display->xdisplay,
+-                      1,
+-                      &spec,
+-                      &num_ids,
+-                      &client_ids);
+-
+-  for (i = 0; i < num_ids; i++)
+-    {
+-      if (client_ids[i].spec.mask == XRES_CLIENT_ID_PID_MASK)
+-        {
+-          pid = XResGetClientPid (&client_ids[i]);
+-          break;
+-        }
+-    }
+-
+-  XResClientIdsDestroy (num_ids, client_ids);
+-
+-  return pid;
+-}
+-
+ static void
+ reload_net_wm_pid (MetaWindow    *window,
+                    MetaPropValue *value,
+                    gboolean       initial)
+ {
+-  pid_t pid;
+-
+-  pid = get_local_pid (window);
+-
+-  if (pid != -1)
+-    {
+-      meta_verbose ("Ignoring _NET_WM_PID in favor of XResGetClientPid\n");
+-
+-      window->net_wm_pid = pid;
+-      return;
+-    }
+ 
+   if (value->type != META_PROP_VALUE_INVALID)
+     {
+ 
